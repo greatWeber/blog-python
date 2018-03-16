@@ -1,0 +1,39 @@
+body, p,h1,h2,h3,li,ul,img ,table{
+    margin:0;
+    padding:0;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+input {
+  outline: none;
+}
+
+textarea {
+  resize: none;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.clear {
+  zoom: 1;
+}
+
+.clear:after {
+  content: '';
+  height: 0;
+  display: block;
+  clear: both;
+}
