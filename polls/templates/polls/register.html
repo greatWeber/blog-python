@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <title>register</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'polls/css/login.css' %}">
-    <link rel="stylesheet" href="{% static 'polls/css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'polls/dist/css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'polls/dist/css/reset.css' %}">
   </head>
   <body>
     <div class="form_box">
@@ -22,13 +22,13 @@
         </div>
         <div class="item">
           <label for="repassword">确认密码：</label>
-          <input type="repassword" name="repassword" value="">
+          <input type="password" name="repassword" value="">
         </div>
         <input id="submit" type="button" name="" value="登陆">
       </form>
     </div>
 
-    <script type="text/javascript" src="{%static 'polls/js/jquery-3.3.1.js'%}"></script>
+    <script type="text/javascript" src="{%static 'polls/dist/js/jquery-3.3.1.js'%}"></script>
     <script type="text/javascript">
       $(function(){
         $('#submit').on('click', function(){

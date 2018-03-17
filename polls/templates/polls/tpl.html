@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>后台管理</title>
+    {%load static%}
+    <link rel="stylesheet" href="{%static 'polls/dist/css/reset.css'%}">
+    <link rel="stylesheet" href="{%static 'polls/dist/css/admin.css'%}">
+    {%block css%}
+    {%endblock%}
+  </head>
+  <body>
+    <div class="header clear">
+      <h2 class="fl title">博客后台管理</h2>
+      <div class="fr user">
+        <span class="name">{{username}}</span>
+        <a class="logout" href="/polls/logout">退出</a>
+      </div>
+    </div>
+    <div class="bar">
+      <ul>
+        <li><a href="javascript:;">首页</a></li>
+        <li><a href="javascript:;">分类</a></li>
+        <li><a href="javascript:;">文章</a></li>
+      </ul>
+    </div>
+
+    <div class="content">
+      {%block content%}
+      {%endblock%}
+    </div>
+
+    <script src="{%static 'polls/dist/js/jquery-3.3.1.js'%}"></script>
+    {%block js%}{%endblock%}
+  </body>
+</html>

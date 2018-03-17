@@ -2,11 +2,13 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 
-from django.contrib.auth import login, logout, authenticate
+#from django.contrib.auth import login, logout, authenticate
 
 from django.contrib.auth.models import User
+
+from .models import Member ,Cate
 
 def index(request):
 	return HttpResponse('hello welcome to Django!')
@@ -16,9 +18,10 @@ def mlogin(request):
     if request.method == 'POST':
         name = request.POST.get('name','')
         psd = request.POST.get('password','')
-        user = authenticate(username=name,password=psd)
-        if user is not None:
-            login(request, user)
+        user = Member.objects.filter(name=name, password=psd).get()
+        print(user)
+        if user:
+            request.session['username']=user.name
             data = {'status':1,'info':'登陆成功','url':'/polls/index'}
         else:
 
@@ -35,10 +38,10 @@ def register(request):
         repsd = request.POST.get('repassword','')
         if psd != repsd:
             data = {'status':-1,'info':'确认密码不一致','url':'/polls/register'}
-        elif User.objects.filter(username=name):
+        elif Member.objects.filter(name=name):
             data = {'status':-2,'info':'已存在用户','url':'/polls/register'}
         else:
-            user = User.objects.create_user(username=name,password=psd,email='')
+            user = Member.objects.create(name=name,password=psd)
             user.save();
             if user.id:
                 data = {'status':1,'info':'注册成功','url':'/polls/login'}
@@ -48,3 +51,16 @@ def register(request):
         return JsonResponse(data)
     else:
         return render(request,'polls/register.html')
+
+def logout(request):
+    del request.session['username']
+    return HttpResponseRedirect('/polls/login')
+
+def check_login(request):
+    if request.session['username'] is None:
+        return HttpResponseRedirect('/polls/login')
+
+def mindex(request):
+    check_login(request)
+    content = {'username':request.session['username']}
+    return render(request, 'polls/mindex.html', content)
