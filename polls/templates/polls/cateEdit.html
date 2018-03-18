@@ -1,0 +1,46 @@
+{%extends './tpl.html'%}
+{%block content%}
+<div class="head">
+  <h3 class="title">添加分类</h3>
+</div>
+<div class="form">
+  <form action="">
+    <input type="hidden" name="id" value="{{cate.id}}">
+    {%csrf_token%}
+    <div class="item">
+      <label for="">中文名称:</label>
+      <input type="text" name="cname" value="{{cate.cname}}">
+    </div>
+    <div class="item">
+      <label for="">英文名称:</label>
+      <input type="text" name="ename" value="{{cate.cname}}">
+    </div>
+    <div class="item">
+      <input type="button" class="submit" value="修改">
+      <a href="/polls/cateIndex">返回</a>
+    </div>
+  </form>
+</div>
+{%endblock%}
+
+{%block js%}
+<script>
+  $(function(){
+    $('.submit').on('click', function(){
+      $.ajax({
+        type:"POST",
+        url:"/polls/cateEdit",
+        data: $('form').serialize(),
+        success: function(data){
+          if(data.status==1){
+            alert(data.info);
+            window.location.href=data.url;
+          }else{
+            alert(data.info);
+          }
+        }
+      })
+    });
+  })
+</script>
+{%endblock%}

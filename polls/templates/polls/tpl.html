@@ -19,9 +19,9 @@
     </div>
     <div class="bar">
       <ul>
-        <li><a href="javascript:;">首页</a></li>
-        <li><a href="javascript:;">分类</a></li>
-        <li><a href="javascript:;">文章</a></li>
+        <li><a {%if title == 'index'%}class="act"{%endif%} href="/polls/mindex">首页</a></li>
+        <li><a {%if title == 'cate'%}class="act"{%endif%} href="/polls/cateIndex">分类</a></li>
+        <li><a {%if title == 'page'%}class="act"{%endif%} href="/polls/pageIndex">文章</a></li>
       </ul>
     </div>
 

@@ -1,0 +1,81 @@
+{%extends './tpl.html'%}
+{%block css%}
+{%load static%}
+<link rel="stylesheet" href="{% static 'polls/simditor/styles/simditor.css' %}">
+{%endblock%}
+{%block content%}
+<div class="head">
+  <h3 class="title">修改文章</h3>
+</div>
+<div class="form">
+  <form action="" enctype="multipart/form-data">
+    {%csrf_token%}
+    <input type="hidden" name="id" value="{{page.id}}">
+    <div class="item">
+      <label for="">标题:</label>
+      <input type="text" name="title" value="{{page.title}}">
+    </div>
+    <div class="item">
+      <label for="">作者:</label>
+      <input type="text" name="author" value="{{page.author}}">
+    </div>
+    <div class="item">
+      <label for="">缩略图:</label>
+      <input type="file" name="thumb" value="{{page.thumb}}">
+      <img src="{{page.thumb.url}}" alt="">
+    </div>
+    <div class="item">
+      <label for="">简介:</label>
+      <textarea name="info" cols="30" rows="10">{{page.info}}</textarea>
+    </div>
+    <div class="item">
+      <label for="">内容:</label>
+      <textarea id="editor" name="content" cols="30" rows="10">{{page.content}}</textarea>
+    </div>
+    <div class="item">
+      <input type="button" class="submit" value="修改">
+      <a href="/polls/pageIndex">返回</a>
+    </div>
+  </form>
+</div>
+{%endblock%}
+
+{%block js%}
+<script src="{%static '/polls/simditor/scripts/jquery.min.js'%}"></script>
+<script src="{%static '/polls/simditor/scripts/module.js'%}"></script>
+<script src="{%static '/polls/simditor/scripts/hotkeys.js'%}"></script>
+<script src="{%static '/polls/simditor/scripts/uploader.js'%}"></script>
+<script src="{%static '/polls/simditor/scripts/simditor.js'%}"></script>
+<script>
+  $(function(){
+    $('.submit').on('click', function(){
+      $.ajax({
+        type:"POST",
+        url:"/polls/pageEdit",
+        cache: false,
+        contentType:false,
+        processData: false,
+        data: new FormData($('form')[0]),
+        success: function(data){
+          if(data.status==1){
+            alert(data.info);
+            window.location.href=data.url;
+          }else{
+            alert(data.info);
+          }
+        }
+      })
+    });
+var csrf_token = $('input[name="csrfmiddlewaretoken"]').val();
+    var editor = new Simditor({
+      textarea: $('#editor'),
+      upload:{
+        url: '/polls/upload',
+        params: {
+          csrfmiddlewaretoken: csrf_token
+        }
+      }
+    })
+  })
+</script>
+{%endblock%}
